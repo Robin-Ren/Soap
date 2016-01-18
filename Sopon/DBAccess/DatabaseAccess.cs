@@ -57,8 +57,9 @@ namespace Sopon.DBAccess
                             OutcomeDescription,
                             GoodsUnitPrice,
                             GoodsCount,
-                            DateCreated
-                            FROM Outcome";
+                            DateCreated,
+                            DateModified
+                            FROM Outcome WHERE IsDeleted != 1";
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
 
                 DataTable dt = new DataTable();
@@ -70,12 +71,14 @@ namespace Sopon.DBAccess
                     foreach (DataRow row in dt.Rows)
                     {
                         OutCome item = new OutCome();
+                        item.ID = Convert.ToInt32(row[0]);
                         item.OutcomeName = row[1].ToString();
                         item.Amout = Convert.ToDouble(row[2]);
                         item.OutcomeDesc = row[3].ToString();
                         item.GoodsUnitPrice = Convert.ToDouble(row[4].ToString());
                         item.GoodsCount = Convert.ToInt32(row[5].ToString());
-                        item.CreatedDate = Convert.ToDateTime(row[6]);
+                        item.CreatedDate = row[6].ToString();
+                        item.DateModified = row[7].ToString();
 
                         retOutcomeDetails.Add(item);
                     }
@@ -92,6 +95,119 @@ namespace Sopon.DBAccess
             return retOutcomeDetails;
         }
 
+        public List<OutCome> GetOutcomeBySearchConditions(string outcomeName, string outcomeDesc, string fromDate, string toDate)
+        {
+            List<OutCome> retOutcomeDetails = new List<OutCome>();
+
+            try
+            {
+                string sql = @"SELECT SID,
+                            OutcomeName,
+                            OutcomeAmount,
+                            OutcomeDescription,
+                            GoodsUnitPrice,
+                            GoodsCount,
+                            DateCreated,
+                            DateModified
+                            FROM Outcome WHERE IsDeleted != 1";
+                string whereClause = string.Empty;
+                if(!string.IsNullOrEmpty(outcomeName))
+                {
+                    whereClause += " AND OutcomeName like \'%" + outcomeName + "%\'";
+                }
+                if (!string.IsNullOrEmpty(outcomeDesc))
+                {
+                    whereClause += " AND OutcomeDescription like \'%" + outcomeDesc + "%\'";
+                }
+                if (!string.IsNullOrEmpty(fromDate))
+                {
+                    whereClause += " AND DateCreated>=\'" + fromDate + "\'";
+                }
+                if (!string.IsNullOrEmpty(toDate))
+                {
+                    whereClause += " AND DateCreated<=\'" + toDate + "\'";
+                }
+
+                SQLiteCommand command = new SQLiteCommand(sql + whereClause, m_dbConnection);
+
+                DataTable dt = new DataTable();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(command);
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        OutCome item = new OutCome();
+                        item.ID = Convert.ToInt32(row[0]);
+                        item.OutcomeName = row[1].ToString();
+                        item.Amout = Convert.ToDouble(row[2]);
+                        item.OutcomeDesc = row[3].ToString();
+                        item.GoodsUnitPrice = Convert.ToDouble(row[4].ToString());
+                        item.GoodsCount = Convert.ToInt32(row[5].ToString());
+                        item.CreatedDate = row[6].ToString();
+                        item.DateModified = row[7].ToString();
+
+                        retOutcomeDetails.Add(item);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper logger = new LogHelper(m_dbConnection);
+                logger.DoErrorLogging(LogType.Error, OperationType.Query, ex);
+            }
+
+            return retOutcomeDetails;
+        }
+
+        public OutCome GetOutcomeBySID(int id)
+        {
+            OutCome retOutcomeDetail = new OutCome();
+
+            try
+            {
+                string sql = @"SELECT SID,
+                            OutcomeName ,
+                            OutcomeAmount,
+                            OutcomeDescription,
+                            GoodsUnitPrice,
+                            GoodsCount,
+                            DateCreated,
+                            DateModified
+                            FROM Outcome WHERE SID = " + id.ToString();
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+
+                DataTable dt = new DataTable();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(command);
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        retOutcomeDetail.ID = Convert.ToInt32(row[0]);
+                        retOutcomeDetail.OutcomeName = row[1].ToString();
+                        retOutcomeDetail.Amout = Convert.ToDouble(row[2]);
+                        retOutcomeDetail.OutcomeDesc = row[3].ToString();
+                        retOutcomeDetail.GoodsUnitPrice = Convert.ToDouble(row[4].ToString());
+                        retOutcomeDetail.GoodsCount = Convert.ToInt32(row[5].ToString());
+                        retOutcomeDetail.CreatedDate = row[6].ToString();
+                        retOutcomeDetail.DateModified = row[7].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper logger = new LogHelper(m_dbConnection);
+                logger.DoErrorLogging(LogType.Error, OperationType.Query, ex);
+            }
+
+            return retOutcomeDetail;
+        }
+
         public int AddNewOutcomeRecord(OutCome newRec)
         {
             if (newRec == null)
@@ -105,6 +221,7 @@ namespace Sopon.DBAccess
                             OutcomeDescription,
                             GoodsUnitPrice,
                             GoodsCount,
+                            IsDeleted,
                             DateCreated
                             ) VALUES ('"
                             + newRec.OutcomeName.ToString() + "\',\'"
@@ -112,7 +229,8 @@ namespace Sopon.DBAccess
                             + newRec.OutcomeDesc + "\',\'"
                             + newRec.GoodsUnitPrice + "\',\'"
                             + newRec.GoodsCount + "\',\'"
-                            + newRec.CreatedDate.ToString("yyyy-MM-dd") + "\')";
+                            + "0\',\'"
+                            + newRec.CreatedDate + "\')";
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 return command.ExecuteNonQuery();
             }
@@ -123,5 +241,55 @@ namespace Sopon.DBAccess
                 return -1;
             }
         }
+
+        public int UpdateOutcomeRecord(OutCome newRec)
+        {
+            if (newRec == null)
+                return -1;
+
+            try
+            {
+                string sql = @"UPDATE Outcome 
+                            SET OutcomeName ='" + newRec.OutcomeName.ToString() + "\'," +
+                            "OutcomeAmount = \'" + newRec.Amout.ToString() + "\'," +
+                            "OutcomeDescription= \'" + newRec.OutcomeDesc.ToString() + "\'," +
+                            "GoodsUnitPrice= \'" + +newRec.GoodsUnitPrice + "\'," +
+                            "GoodsCount= \'" + newRec.GoodsCount + "\'," +
+                            "DateModified= \'" + DateTime.Now.ToString("yyyy-MM-dd") + "\'," +
+                            "DateCreated= \'" + newRec.CreatedDate + "\' " +
+                            "WHERE sid=\'" + newRec.ID + "\'";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                return command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                LogHelper logger = new LogHelper(m_dbConnection);
+                logger.DoErrorLogging(LogType.Error, OperationType.Query, ex);
+                return -1;
+            }
+        }
+
+        public int DeleteOutcomeBySID(string id)
+        {
+            OutCome retOutcomeDetail = new OutCome();
+
+            try
+            {
+                string sql = @"UPDATE Outcome
+                               SET IsDeleted=1,
+                                   DateModified='" + DateTime.Now.ToString("yyyy-MM-dd")
+                              + "\' WHERE SID = " + id;
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                return command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                LogHelper logger = new LogHelper(m_dbConnection);
+                logger.DoErrorLogging(LogType.Error, OperationType.Query, ex);
+            }
+
+            return -1;
+        }
+
     }
 }

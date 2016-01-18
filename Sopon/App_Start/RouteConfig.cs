@@ -18,6 +18,12 @@ namespace Sopon
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Outcome", action = "Outcome", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                 "UpdateOutcomeView", // Route name
+                 "Outcome/", // URL 
+                 new { controller = "Outcome", action = "UpdateOutcomeView" } // Parameter defaults
+                 );
         }
     }
 }

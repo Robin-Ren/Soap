@@ -14,7 +14,7 @@
     <script src="~/Scripts/jquery-ui.min.js"></script>
 
     <script>
-        $("#form").submit(function (e) {
+        $("#btnAdd").click(function (e) {
 
             var url = '/Outcome/HandleAddNewOutcomeRecord'; // the script where you handle the form input.
 
@@ -31,11 +31,13 @@
                 },
                 //data: $("#form").serialize(), // serializes the form's elements.
                 success: function (data) {
-                    alert(data); // show response from the php script.
+                    window.location = '/Outcome/Outcome';
                 }
             });
+        });
 
-            e.preventDefault(); // avoid to execute the actual submit of the form.
+        $("#btnCancel").click(function (e) {
+            window.location = '/Outcome/Outcome';
         });
 
         $(function () {
@@ -112,9 +114,11 @@
                         <label class="control-label" for="txtOutcomeDesc">补充说明</label>
                         <input type="text" class="form-control" id="txtOutcomeDesc">
                     </div>
-                    <input id="btnAdd" type="submit" class="btn btn-lg btn-success" style="font-family: 'Microsoft YaHei';width:120px"></input>
+                    <button id="btnAdd" type="button" class="btn btn-lg btn-success" style="font-family: 'Microsoft YaHei';width:120px">
+                        提交
+                    </button>
                     <button id="btnCancel" type="button" class="btn btn-lg btn-success" style="font-family: 'Microsoft YaHei';width:120px">取消</button>
-</form>
+                </form>
             </div>
         </div>
     </div>

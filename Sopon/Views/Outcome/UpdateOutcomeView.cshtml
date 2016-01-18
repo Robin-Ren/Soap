@@ -1,6 +1,6 @@
 ﻿@using Sopon.Library
 @using Sopon.Models
-@model OutCome
+@model UpdateOutComeModel
 
 @section Scripts
 {
@@ -14,32 +14,34 @@
     <script src="~/Scripts/jquery-ui.min.js"></script>
 
     <script>
-        $("#btnAdd").click(function (e) {
+            $("#btnUpdate").click(function (e) {
+                var url = '/Outcome/HandleModifyOutcomeRecord'; // the script where you handle the form input.
 
-            var url = '/Outcome/HandleAddNewOutcomeRecord'; // the script where you handle the form input.
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {
-                    name: $('#txtOutcomeName').val(),
-                    amount: $('#txtAmout').val(),
-                    unitPrice: $('#txtGoodsUnitPrice').val(),
-                    count: $('#txtGoodsCount').val(),
-                    date: $('#txtCreatedDate').val(),
-                    desc: $('#txtOutcomeDesc').val()
-                },
-                //data: $("#form").serialize(), // serializes the form's elements.
-                success: function (data) {
-                    window.location = '/Outcome/Outcome';
-                }
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        id: $('#txtSID').val(),
+                        name: $('#txtOutcomeName').val(),
+                        amount: $('#txtAmout').val(),
+                        unitPrice: $('#txtGoodsUnitPrice').val(),
+                        count: $('#txtGoodsCount').val(),
+                        date: $('#txtCreatedDate').val(),
+                        desc: $('#txtOutcomeDesc').val()
+                    },
+                    //data: $("#form").serialize(), // serializes the form's elements.
+                    success: function (data) {
+                        window.location = '/Outcome/Outcome';
+                    },
+                    error: function (data) {
+                        alert("Failed to update the record.");
+                    }
+                });
             });
-        });
 
-        $("#btnCancel").click(function (e) {
-            window.location = '/Outcome/Outcome';
-        });
-
+            $("#btnCancel").click(function (e) {
+                window.location = '/Outcome/Outcome';
+            });
         $(function () {
             $("#txtCreatedDate").datepicker({
                 dateFormat: 'yy-mm-dd',
@@ -77,20 +79,21 @@
             <!-- Page Heading -->
             <br />
             <h1 class="page-header" style="font-family:YouYuan">
-                新加支出
+                修改支出
             </h1>
             <!-- /.row -->
             <div class="row">
                 <form role="form" id="form">
+                    <input type="hidden" class="form-control" id="txtSID" value="@Model.ID">
                     <div class="form-group">
                         <label class="control-label" for="txtOutcomeName">支出项目</label>
-                        <input type="text" class="form-control" id="txtOutcomeName">
+                        <input type="text" class="form-control" id="txtOutcomeName" value="@Model.OutcomeName">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="txtAmout">支出费用</label>
                         <div class="form-group input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="text" class="form-control" id="txtAmout">
+                            <input type="text" class="form-control" id="txtAmout" value="@Model.Amout">
                             <span class="input-group-addon">.00</span>
                         </div>
                     </div>
@@ -98,25 +101,24 @@
                         <label class="control-label" for="txtGoodsUnitPrice">物品单价</label>
                         <div class="form-group input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="text" class="form-control" id="txtGoodsUnitPrice">
+                            <input type="text" class="form-control" id="txtGoodsUnitPrice" value="@Model.GoodsUnitPrice">
                             <span class="input-group-addon">.00</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="txtGoodsCount">物品数量</label>
-                        <input type="text" class="form-control" id="txtGoodsCount">
+                        <input type="text" class="form-control" id="txtGoodsCount" value="@Model.GoodsCount">
                     </div>
                     <div class="form-group" id="divDate">
                         <label class="control-label" for="txtCreatedDate">支出时间</label>
-                        <input id="txtCreatedDate" class="form-control" style="position: relative; z-index: 100000;" type="text" value="">
+                        <input id="txtCreatedDate" class="form-control" style="position: relative; z-index: 100000;" type="text"
+                               value="@Model.CreatedDate">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="txtOutcomeDesc">补充说明</label>
-                        <input type="text" class="form-control" id="txtOutcomeDesc">
+                        <input type="text" class="form-control" id="txtOutcomeDesc" value="@Model.OutcomeDesc">
                     </div>
-                    <button id="btnAdd" type="button" class="btn btn-lg btn-success" style="font-family: 'Microsoft YaHei';width:120px">
-                        提交
-                    </button>
+                    <button id="btnUpdate" type="button" class="btn btn-lg btn-success" style="font-family: 'Microsoft YaHei';width:120px">更新</button>
                     <button id="btnCancel" type="button" class="btn btn-lg btn-success" style="font-family: 'Microsoft YaHei';width:120px">取消</button>
                 </form>
             </div>

@@ -12,6 +12,13 @@ namespace Sopon.Library
 
     public class OutCome
     {
+        private int m_sid;
+
+        public int ID
+        {
+            get { return m_sid; }
+            set { m_sid = value; }
+        }
         private double m_Amout;
 
         public double Amout
@@ -48,12 +55,34 @@ namespace Sopon.Library
             set { m_GoodsCount = value; }
         }
 
-        private DateTime m_CreatedDate;
+        private string m_CreatedDate;
 
-        public DateTime CreatedDate
+        public string CreatedDate
         {
             get { return m_CreatedDate; }
             set { m_CreatedDate = value; }
         }
+
+        private string m_DateModified;
+
+        public string DateModified
+        {
+            get { return m_DateModified; }
+            set { m_DateModified = value; }
+        }
+
+        private bool m_IsDeleted;
+
+        public bool IsDeleted
+        {
+            get { return m_IsDeleted; }
+            set { m_IsDeleted = value; }
+        }
+    }
+
+    public enum BrowseType
+    {
+        Normal = 0,
+        Search = 1,
     }
 }
