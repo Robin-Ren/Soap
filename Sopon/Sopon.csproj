@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -326,7 +327,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Outcome\OutcomeView.cshtml" />
     <Content Include="Views\Outcome\AddOutcomeView.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -368,7 +371,11 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>Copy "$(SolutionDir)\Sopon\SQLiteDlls\SQLite.Interop.dll" "$(SolutionDir)$(SolutionName)/$(OutDir)"</PreBuildEvent>
+    <PreBuildEvent>Copy "$(SolutionDir)Sopon\SQLiteDlls\SQLite.Interop.dll" "$(SolutionDir)$(SolutionName)\$(OutDir)"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

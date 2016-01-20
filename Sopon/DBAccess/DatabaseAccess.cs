@@ -1,6 +1,7 @@
 ﻿using Sopon.Library;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
@@ -18,7 +19,8 @@ namespace Sopon.DBAccess
         {
             try
             {
-                string dbFilePath = new Uri(string.Format("{0}\\DBFile\\SoponDB.db3", Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase))).AbsolutePath.Replace("%20", " ");
+                //string dbFilePath = new Uri(string.Format("{0}\\DBFile\\SoponDB.db3", Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase))).AbsolutePath.Replace("%20", " ");
+                string dbFilePath = ConfigurationManager.AppSettings["what_do_you_want"];
                 //bool isExist = File.Exists(path);
 
                 SQLiteConnectionStringBuilder conn_builder = new SQLiteConnectionStringBuilder
@@ -34,7 +36,6 @@ namespace Sopon.DBAccess
 
                 };
 
-                ////连接字符串
                 m_dbConnection = new SQLiteConnection(conn_builder.ConnectionString);
                 m_dbConnection.Open();
             }
@@ -42,6 +43,7 @@ namespace Sopon.DBAccess
             {
                 //LogHelper logger = new LogHelper(m_dbConnection);
                 //logger.DoErrorLogging(LogType.Error, OperationType.Query, ex);
+                string msg = ex.Message;
             }
         }
 

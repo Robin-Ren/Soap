@@ -14,34 +14,34 @@
     <script src="~/Scripts/jquery-ui.min.js"></script>
 
     <script>
-            $("#btnUpdate").click(function (e) {
-                var url = '/Outcome/HandleModifyOutcomeRecord'; // the script where you handle the form input.
+        $("#btnUpdate").click(function (e) {
+            var url = '/Outcome/HandleModifyOutcomeRecord'; // the script where you handle the form input.
 
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: {
-                        id: $('#txtSID').val(),
-                        name: $('#txtOutcomeName').val(),
-                        amount: $('#txtAmout').val(),
-                        unitPrice: $('#txtGoodsUnitPrice').val(),
-                        count: $('#txtGoodsCount').val(),
-                        date: $('#txtCreatedDate').val(),
-                        desc: $('#txtOutcomeDesc').val()
-                    },
-                    //data: $("#form").serialize(), // serializes the form's elements.
-                    success: function (data) {
-                        window.location = '/Outcome/Outcome';
-                    },
-                    error: function (data) {
-                        alert("Failed to update the record.");
-                    }
-                });
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    id: $('#txtSID').val(),
+                    name: $('#txtOutcomeName').val(),
+                    amount: $('#txtAmout').val(),
+                    unitPrice: $('#txtGoodsUnitPrice').val(),
+                    count: $('#txtGoodsCount').val(),
+                    date: $('#txtCreatedDate').val(),
+                    desc: $('#txtOutcomeDesc').val()
+                },
+                //data: $("#form").serialize(), // serializes the form's elements.
+                success: function (data) {
+                    window.location = '/Outcome/Outcome';
+                },
+                error: function (data) {
+                    alert("Failed to update the record.");
+                }
             });
+        });
 
-            $("#btnCancel").click(function (e) {
-                window.location = '/Outcome/Outcome';
-            });
+        $("#btnCancel").click(function (e) {
+            window.location = '/Outcome/Outcome';
+        });
         $(function () {
             $("#txtCreatedDate").datepicker({
                 dateFormat: 'yy-mm-dd',

@@ -87,7 +87,7 @@ c:\users\robin\documents\visual studio 2013\Projects\Sopon\Sopon\bin\System.Data
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Sopon\bin\DBFile\SoponDB.db3
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Sopon\obj\Debug\Sopon.csprojResolveAssemblyReference.cache
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Sopon\bin\Views\Outcome\AddOutcomeView.cshtml
-C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\DBFile\SoponDB.db3
+C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\Views\Outcome\AddOutcomeView.cshtml
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\Sopon.dll.config
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\Sopon.dll
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\Sopon.pdb
@@ -172,7 +172,7 @@ C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\ko\Sys
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\ru\System.Spatial.resources.dll
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\obj\Debug\Sopon.csprojResolveAssemblyReference.cache
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\obj\Debug\Sopon.dll
 C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\obj\Debug\Sopon.pdb
-C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\Views\Outcome\AddOutcomeView.cshtml
+C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\bin\DBFile\SoponDB.db3
+C:\Users\Robin\Documents\Visual Studio 2013\Projects\Sopon\Soap\Sopon\obj\Debug\Sopon.csprojResolveAssemblyReference.cache
